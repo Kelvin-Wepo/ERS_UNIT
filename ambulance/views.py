@@ -25,7 +25,7 @@ def public_register(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            msg = 'user created'
+            msg = 'User created successfully'
             profile, created = Profile.objects.get_or_create(user=user)
 
             phone_number = form.cleaned_data.get('contact_number')
@@ -33,21 +33,25 @@ def public_register(request):
             if phone_number:
                 profile.contact_number = phone_number
                 profile.save()
-                # SMS sending logic (you may want to move this to a separate function or task)
-                africastalking_username = 'kwepo'
-        africastalking_api_key = africastalking.api_key
-            
-        africastalking.initialize(africastalking_username, africastalking_api_key)
-        sms = africastalking.SMS
-        message = "Welcome to ERS Emergency Service."
-        response = sms.send(message, [phone])
-        return redirect('login')
-    else:
-        msg = 'form is not valid'
-    
-        form = SignUpForm()
-    return render(request, 'logins/register.html', {'form': form, 'msg': msg})
+                
+                # SMS sending logic
+                africastalking_username = 'Kwepo'
+                africastalking_api_key = 'atsk_4059a1fbccd94fed5bc3bff4e36585efd4f4676614fef1b58fbcbc6c437421635cdcb304'
+                
+                africastalking.initialize(africastalking_username, africastalking_api_key)
+                sms = africastalking.SMS
+                message = "Welcome to ERS Emergency Service."
+                try:
+                    response = sms.send(message, [phone_number], short_code='20880')
+                except Exception as e:
+                    print(f"Error sending SMS: {e}")
 
+            return redirect('login')
+        else:
+            msg = 'Form is not valid'
+    
+    form = SignUpForm()
+    return render(request, 'logins/register.html', {'form': form, 'msg': msg})
 def user_login(request):
     form = LoginForm(request.POST or None)
     msg = None
