@@ -1,0 +1,95 @@
+{% extends 'public/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-7">
+                    <h2>{{ service.name }}</h2>
+                    <div class="card">
+                        {% if service.image %}
+                            <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" id="service-image">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <p class="text-center">
+                            {{ service.description }}
+                        </p>
+                    </div>
+                    <div class="row mb-4 ps-5 pt-3">
+                        <!-- Service Type -->
+                        <div class="col-md-4 me-3 mb-3">
+                            <h4>{{ service.get_service_type_display }}</h4>
+                            <span class="sc">Service Type</span>
+                        </div>
+
+                        <!-- Availability -->
+                        <div class="col-md-4 me-3 mb-3">
+                            <h4>{% if service.availability %}Available{% else %}Not Available{% endif %}</h4>
+                            <span class="sc">Availability</span>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="col-md-4 me-3 mb-3">
+                            <h4>{{ service.location }}</h4>
+                            <span class="sc">Location</span>
+                        </div>
+
+                        <!-- Contact Number -->
+                        <div class="col-md-4 me-3 mb-3">
+                            <h4>{{ service.contact_number }}</h4>
+                            <span class="sc">Contact Number</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ps-5">
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-warning btn-lg p-3 fs-5 fw-bold" data-mdb-toggle="modal" data-mdb-target="#feedbackModal">
+                                Provide Feedback
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{% url 'book_service' service.id %}" class="btn btn-success btn-lg p-3 fs-5 fw-bold">Book Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">Provide Feedback</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 mx-auto" id="contain-feedback">
+                    <h2 class="text-center p-4" id="feedback-title">We value your feedback</h2>
+                    <div class="col-md-12 mx-auto" id="form-feedback">
+                        <div class="form_container shadow text-black">
+                            <form action="{% url 'user_single_service' service.id %}" method="POST" class="pb-3">
+                                {% csrf_token %}
+                                <div class="col-md-10 p-4 mx-auto">
+                                    {% bootstrap_form form %}
+                                </div>
+                                <p class="text-center">
+                                    <button type="submit" class="btn btn-warning btn-lg">Submit Feedback</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

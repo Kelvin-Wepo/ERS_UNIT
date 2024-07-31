@@ -5,6 +5,7 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
+import africastalking
 
 def home(request):
     feedbacks = Feedback.objects.all()
@@ -33,11 +34,17 @@ def public_register(request):
                 profile.contact_number = phone_number
                 profile.save()
                 # SMS sending logic (you may want to move this to a separate function or task)
-                # ...
-            return redirect('login')
-        else:
-            msg = 'form is not valid'
+                africastalking_username = 'kwepo'
+        africastalking_api_key = africastalking.api_key
+            
+        africastalking.initialize(africastalking_username, africastalking_api_key)
+        sms = africastalking.SMS
+        message = "Welcome to ERS Emergency Service."
+        response = sms.send(message, [phone])
+        return redirect('login')
     else:
+        msg = 'form is not valid'
+    
         form = SignUpForm()
     return render(request, 'logins/register.html', {'form': form, 'msg': msg})
 
