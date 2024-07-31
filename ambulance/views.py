@@ -12,7 +12,7 @@ def home(request):
     return render(request, 'public/index.html', {'feedbacks': feedbacks})
 
 def volunteer_home(request):
-    feedbacks = Feedback.objects.all()
+    opportunities = VolunteerOpportunity.objects.all()
     return render(request, 'volunteers/volunteer_home.html', {'feedbacks': feedbacks})
 
 def services(request):
@@ -172,10 +172,16 @@ def book_service(request, service_id):
             booking.user = request.user
             booking.service = service
             booking.save()
-            return redirect('single_service', service_id)
+            return redirect('booking_success')  # Redirect to the success page
     else:
         form = BookingForm()
     return render(request, 'public/book_service.html', {'form': form, 'service': service})
+
+def booking_success(request):
+    return render(request, 'public/booking_success.html')
+def booking_success(request):
+    return render(request, 'public/booking_success.html')
+
 
 def add_volunteer_opportunity(request):
     if request.method == 'POST':

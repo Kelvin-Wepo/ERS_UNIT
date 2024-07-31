@@ -33,9 +33,9 @@ urlpatterns = [
     path('services/', views.services, name='services'),
     
     path('user_service/<int:service_id>/', views.user_single_service, name='user_single_service'),
-    
-    path('book_service/<int:service_id>/', views.book_service, name='book_service'),
-    
+
+    path('book-service/<int:service_id>/', views.book_service, name='book_service'),  # Correct URL pattern
+    path('booking-success/', views.booking_success, name='booking_success'),
     path('add_volunteer_opportunity/', views.add_volunteer_opportunity, name='add_opportunity'),
     
     path('apply_volunteer/<int:opportunity_id>/', views.apply_volunteer, name='apply_volunteer'),
