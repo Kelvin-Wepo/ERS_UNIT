@@ -56,9 +56,9 @@
       <div class="row">
         <div class="col-md-4 text-center mb-4" >
           <p>
-            <i class="fa-solid fa-ambulance fa-4x text-warning" id="tractor-svg"></i>
+            <i class="fa-solid fa-ambulance fa-4x text-red" style="color:red; id="tractor-svg"></i>
           </p>
-          <p class="fs-4 text-warning">Ambulance Booking</p>
+          <p class="fs-4 text-white">Ambulance Booking</p>
 
 
         </div>
@@ -67,7 +67,7 @@
           <p>
             {% comment %} <i class="fa-solid fa-truck-monster fa-3x text-warning"></i> {% endcomment %}
             <svg class="text-warning" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 8.5H20.5V7H15V5H12V7H8.5C7.67 7 7 7.67 7 8.5V10H4C3.45 10 3 10.45 3 11V15H2V18.5C2 19.88 3.12 21 4.5 21C5.88 21 7 19.88 7 18.5H15C15 19.88 16.12 21 17.5 21C18.88 21 20 19.88 20 18.5H21V16H22V8.5ZM11 7H13V5H15V7H20V10H4V8.5C4 7.67 4.67 7 5.5 7H8.5V5H11V7ZM5.5 19.5C4.67 19.5 4 18.83 4 18C4 17.17 4.67 16.5 5.5 16.5C6.33 16.5 7 17.17 7 18C7 18.83 6.33 19.5 5.5 19.5ZM17.5 19.5C16.67 19.5 16 18.83 16 18C16 17.17 16.67 16.5 17.5 16.5C18.33 16.5 19 17.17 19 18C19 18.83 18.33 19.5 17.5 19.5ZM20.5 15H18V11H20.5V15Z" fill="#FFC107"/>
+              <path d="M22 8.5H20.5V7H15V5H12V7H8.5C7.67 7 7 7.67 7 8.5V10H4C3.45 10 3 10.45 3 11V15H2V18.5C2 19.88 3.12 21 4.5 21C5.88 21 7 19.88 7 18.5H15C15 19.88 16.12 21 17.5 21C18.88 21 20 19.88 20 18.5H21V16H22V8.5ZM11 7H13V5H15V7H20V10H4V8.5C4 7.67 4.67 7 5.5 7H8.5V5H11V7ZM5.5 19.5C4.67 19.5 4 18.83 4 18C4 17.17 4.67 16.5 5.5 16.5C6.33 16.5 7 17.17 7 18C7 18.83 6.33 19.5 5.5 19.5ZM17.5 19.5C16.67 19.5 16 18.83 16 18C16 17.17 16.67 16.5 17.5 16.5C18.33 16.5 19 17.17 19 18C19 18.83 18.33 19.5 17.5 19.5ZM20.5 15H18V11H20.5V15Z" fill="#FF0000"/>
             </svg>
             
           </p>
@@ -77,7 +77,7 @@
         </div>
         <div class="col-md-4 text-center  mb-4">
           <p>
-            <i class="fa-solid fa-truck-pickup fa-3x text-warning"></i>
+            <i class="fa-solid fa-truck-pickup fa-3x text-red" style="color:red;"></i>
           </p>
           <p class="fs-4 text-white">Volunteering Services</p>
 
@@ -240,7 +240,7 @@
         <div class="col-lg-8 mt-5 mt-lg-0" id="feedback-from-user">
           <div id="subscribe-form">
             <section class="subscribe">
-              <form class="feedback-form" method="POST">
+              <form action="https://formspree.io/f/xwkgladq" class="feedback-form" method="POST">
                 {% csrf_token %}
                 <!-- Name input -->
                 <div class="form-outline mb-4 p-2">
