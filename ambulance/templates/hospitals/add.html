@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Volunteer Opportunity{% endblock %}
+
+{% block content %}
+<section class="volunteer-opportunity-create">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Create a Volunteer Opportunity</h2>
+                        <p class="text-center text-muted mb-4">Your opportunity could be someone's chance to make a difference!</p>
+                        
+                        <form method="POST" action="{% url 'add_opportunity' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="mb-4">
+                                <label for="title" class="form-label">Opportunity Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="location" class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="location" name="location" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="date" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="date" name="date" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="image" class="form-label">Opportunity Image</label>
+                                <input type="file" class="form-control" id="image" name="image">
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Create Opportunity</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .volunteer-opportunity-create {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-primary:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+</style>
+{% endblock %}
