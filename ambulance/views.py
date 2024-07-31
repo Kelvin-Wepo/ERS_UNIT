@@ -36,7 +36,7 @@ def public_register(request):
                 
                 # SMS sending logic
                 africastalking_username = 'Kwepo'
-                africastalking_api_key = 'atsk_4059a1fbccd94fed5bc3bff4e36585efd4f4676614fef1b58fbcbc6c437421635cdcb304'
+                africastalking_api_key = ''
                 
                 africastalking.initialize(africastalking_username, africastalking_api_key)
                 sms = africastalking.SMS
