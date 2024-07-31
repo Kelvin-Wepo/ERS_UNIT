@@ -134,7 +134,6 @@ strong {
 
 #nav {
     background-color: whitesmoke;
-    color:#FF0000;
     font-size: 1.5vh;
 }
 
@@ -537,13 +536,13 @@ ul li {
 
     /* drop-down card-styling */
     .dropdown-menu {
-        background-color: #f7c35f;
+        background-color: #6C757D;
         width: 300px;
         height: 220px;
     }
 
     .dropdown-item {
-        color: #023831;
+        color: red;
         font-size: 2vh;
         line-height: 1.8;
     }
@@ -614,7 +613,7 @@ ul li {
 
     .details-btn {
         background-color: #023831;
-        color: #F7C35F;
+        color: red;
         font-family: 'Handlee', cursive;
         font-weight: 900;
         font-size: 2vh;
@@ -623,7 +622,7 @@ ul li {
 
     .details-btn:hover {
         color: #ffffff;
-        background-color: #F7C35F;
+        background-color: red;
     }
 
     #machinery-properties,
