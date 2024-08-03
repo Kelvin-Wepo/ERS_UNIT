@@ -20,8 +20,8 @@ def services(request):
     return render(request, 'public/services.html', {'emergency_services': emergency_services})
 
 def send_welcome_sms(phone_number):
-    africastalking_username = 'Kwepo'
-    africastalking_api_key = 'atsk_4059a1fbccd94fed5bc3bff4e36585efd4f4676614fef1b58fbcbc6c437421635cdcb304'
+    africastalking_username = ''
+    africastalking_api_key = ''
     
     africastalking.initialize(africastalking_username, africastalking_api_key)
     sms = africastalking.SMS

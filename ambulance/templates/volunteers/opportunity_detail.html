@@ -1,0 +1,54 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Opportunity Details{% endblock %}
+
+{% block content %}
+<section class="opportunity-detail">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">{{ opportunity.title }}</h2>
+                        <p class="text-center text-muted mb-4">{{ opportunity.date }}</p>
+                        {% if opportunity.image %}
+                        <div class="text-center mb-4">
+                            <img src="{{ opportunity.image.url }}" alt="{{ opportunity.title }}" class="img-fluid rounded">
+                        </div>
+                        {% endif %}
+                        <p class="text-muted">{{ opportunity.description }}</p>
+                        
+                        <div class="mt-4">
+                            <h5>Location:</h5>
+                            <p>{{ opportunity.location }}</p>
+                        </div>
+                        
+                        <div class="d-grid mt-4">
+                            <a href="{% url 'volunteer_opportunities' %}" class="btn btn-primary btn-lg">Back to Opportunities</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .opportunity-detail {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-primary:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+</style>
+{% endblock %}
