@@ -39,6 +39,8 @@ urlpatterns = [
     path('add_volunteer_opportunity/', views.add_volunteer_opportunity, name='add_opportunity'),
     
     path('apply_volunteer/<int:opportunity_id>/', views.apply_volunteer, name='apply_volunteer'),
-    
+
+    path('volunteer-opportunities/', views.volunteer_opportunities, name='volunteer_opportunities'),
+    path('opportunity/<int:id>/', views.opportunity_detail, name='opportunity_detail'),    
     # Keep these paths if you still need them
 ]
