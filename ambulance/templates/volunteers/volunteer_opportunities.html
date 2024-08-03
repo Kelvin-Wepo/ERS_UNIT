@@ -1,0 +1,60 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Volunteer Opportunities{% endblock %}
+
+{% block content %}
+<section class="volunteer-opportunities">
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Volunteer Opportunities</h2>
+        <div class="row">
+            {% for opportunity in opportunities %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-lg h-100">
+                    {% if opportunity.image %}
+                    <img src="{{ opportunity.image.url }}" class="card-img-top" alt="{{ opportunity.title }}">
+                    {% else %}
+                    <img src="{% static 'images/default-opportunity.jpg' %}" class="card-img-top" alt="Default Image">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ opportunity.title }}</h5>
+                        <p class="card-text text-muted">{{ opportunity.description|truncatewords:20 }}</p>
+                        <p class="card-text"><small class="text-muted">{{ opportunity.date }}</small></p>
+                        <p class="card-text"><small class="text-muted">{{ opportunity.location }}</small></p>
+                        <a href="{% url 'opportunity_detail' opportunity.id %}" class="btn btn-primary mt-auto">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    .volunteer-opportunities {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-10px);
+    }
+    .card-img-top {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 200px;
+        object-fit: cover;
+    }
+    .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-primary:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+</style>
+{% endblock %}

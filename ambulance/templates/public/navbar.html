@@ -34,7 +34,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Navbar brand -->
       <a class="navbar-brand mt-2 mt-lg-0" href="/">
-        <img src="{% static 'images/ems.png' %}" alt="EMERGENCY RESPONSE SERVICES" loading="lazy" id="logo" />
+        <img src="{% static 'images/tiny.jpg' %}" alt="EMERGENCY RESPONSE SERVICES" loading="lazy" id="logo" />
       </a>
       <!-- Left links -->
       {% if user.is_authenticated %}
@@ -48,9 +48,9 @@
         <li class="nav-item me-3">
           <a class="nav-link link-link" href="{% url 'services' %}">Fire Fighting</a>
         </li>
-        <li class="nav-item me-3">
+         <li class="nav-item me-3">
           <a class="nav-link link-link" href="{% url 'volunteer_home' %}">Volunteer</a>
-        </li>
+        </li> 
       </ul>
       <!-- Left links -->
     </div>

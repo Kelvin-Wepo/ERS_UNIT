@@ -19,39 +19,49 @@ def services(request):
     emergency_services = EmergencyService.objects.all()
     return render(request, 'public/services.html', {'emergency_services': emergency_services})
 
+def send_welcome_sms(phone_number):
+    africastalking_username = ''
+    africastalking_api_key = ''
+    
+    africastalking.initialize(africastalking_username, africastalking_api_key)
+    sms = africastalking.SMS
+    message = "Welcome to ERS Emergency Service."
+    
+    try:
+        # Remove the short_code parameter
+        response = sms.send(message, [phone_number])
+        print(f"SMS sent successfully: {response}")
+        return True
+    except Exception as e:
+        print(f"Error sending SMS: {e}")
+        return False
+
 def public_register(request):
-    msg = None
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            msg = 'User created successfully'
             profile, created = Profile.objects.get_or_create(user=user)
 
             phone_number = form.cleaned_data.get('contact_number')
-               
             if phone_number:
                 profile.contact_number = phone_number
                 profile.save()
                 
-                # SMS sending logic
-                africastalking_username = 'Kwepo'
-                africastalking_api_key = ''
-                
-                africastalking.initialize(africastalking_username, africastalking_api_key)
-                sms = africastalking.SMS
-                message = "Welcome to ERS Emergency Service."
-                try:
-                    response = sms.send(message, [phone_number], short_code='20880')
-                except Exception as e:
-                    print(f"Error sending SMS: {e}")
+                if send_welcome_sms(phone_number):
+                    messages.success(request, 'User created successfully and welcome SMS sent.')
+                else:
+                    messages.warning(request, 'User created successfully, but there was an issue sending the welcome SMS.')
+            else:
+                messages.success(request, 'User created successfully.')
 
             return redirect('login')
         else:
-            msg = 'Form is not valid'
-    
-    form = SignUpForm()
-    return render(request, 'logins/register.html', {'form': form, 'msg': msg})
+            messages.error(request, 'Form is not valid. Please correct the errors below.')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'logins/register.html', {'form': form})
 def user_login(request):
     form = LoginForm(request.POST or None)
     msg = None
@@ -163,6 +173,22 @@ def user_single_service(request, service_id):
     
     return render(request, 'public/single_service.html', {'service': service, 'form': form})
 
+def send_booking_confirmation_sms(phone_number):
+    africastalking_username = 'Kwepo'
+    africastalking_api_key = 'atsk_4059a1fbccd94fed5bc3bff4e36585efd4f4676614fef1b58fbcbc6c437421635cdcb304'
+    
+    africastalking.initialize(africastalking_username, africastalking_api_key)
+    sms = africastalking.SMS
+    message = "Your request has been received. Our team will get in touch in the next 20 minutes."
+    
+    try:
+        response = sms.send(message, [phone_number])
+        print(f"SMS sent successfully: {response}")
+        return True
+    except Exception as e:
+        print(f"Error sending SMS: {e}")
+        return False
+
 def book_service(request, service_id):
     service = get_object_or_404(EmergencyService, id=service_id)
     if request.method == 'POST':
@@ -172,6 +198,22 @@ def book_service(request, service_id):
             booking.user = request.user
             booking.service = service
             booking.save()
+
+            # Get the user's phone number from their profile
+            try:
+                profile = Profile.objects.get(user=request.user)
+                phone_number = profile.contact_number
+                if phone_number:
+                    if send_booking_confirmation_sms(phone_number):
+                        messages.success(request, 'Booking successful. A confirmation SMS has been sent.')
+                    else:
+                        messages.warning(request, 'Booking successful, but there was an issue sending the confirmation SMS.')
+                else:
+                    messages.success(request, 'Booking successful.')
+            except Profile.DoesNotExist:
+                messages.success(request, 'Booking successful.')
+                messages.warning(request, 'No phone number found in your profile. SMS confirmation could not be sent.')
+
             return redirect('booking_success')  # Redirect to the success page
     else:
         form = BookingForm()
@@ -207,4 +249,17 @@ def apply_volunteer(request, opportunity_id):
             return redirect('volunteer_home')
     else:
         form = VolunteerApplicationForm()
-    return render(request, 'public/apply_volunteer.html', {'form': form, 'opportunity': opportunity})
+    return render(request, 'volunteers/apply_volunteer.html', {'form': form, 'opportunity': opportunity})
+
+def opportunity_detail(request, id):
+    opportunity = get_object_or_404(VolunteerOpportunity, id=id)
+    return render(request, 'volunteers/opportunity_detail.html', {'opportunity': opportunity})
+
+def add_opportunity(request):
+    # Add your view logic here
+    pass
+
+
+def volunteer_opportunities(request):
+    opportunities = VolunteerOpportunity.objects.all()
+    return render(request, 'volunteers/volunteer_opportunities.html', {'opportunities': opportunities})

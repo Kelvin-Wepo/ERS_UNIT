@@ -1,0 +1,95 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .apply-volunteer-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .apply-volunteer-container h2 {
+        color: #007bff;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    .opportunity-details {
+        background-color: #e9ecef;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+    }
+    .opportunity-details h3 {
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+    .opportunity-details p {
+        color: #6c757d;
+        margin-bottom: 0.25rem;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+    input[type="text"], input[type="email"], textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+    textarea {
+        height: 100px;
+    }
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="apply-volunteer-container">
+    <h2>Apply for Volunteer Opportunity</h2>
+    
+    <div class="opportunity-details">
+        <h3>{{ opportunity.title }}</h3>
+        <p><strong>Description:</strong> {{ opportunity.description }}</p>
+        <p><strong>Location:</strong> {{ opportunity.location }}</p>
+        <p><strong>Date:</strong> {{ opportunity.date }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Submit Application</button>
+    </form>
+</div>
+{% endblock %}
