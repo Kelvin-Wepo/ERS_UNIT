@@ -1,59 +1,102 @@
-{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Volunteer Opportunities{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-5">
-  <div class="col-md-12">
-    <h2 class="text-center mb-5">Available Volunteer Opportunities</h2>
-    <div class="row" id="volunteer-opportunities">
-      {% for opportunity in opportunities %}
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-center mb-0">Available Volunteer Opportunities</h2>
+    {% if opportunities %}
+      <a href="{% url 'apply_volunteer' opportunity_id=opportunities.first.id %}" class="btn btn-success btn-lg">Apply to Volunteer Now</a>
+    {% endif %}
+  </div>
+  
+  <div class="d-flex flex-wrap justify-content-between" id="volunteer-opportunities">
+    {% for opportunity in opportunities %}
+      <div class="card h-100 shadow mb-4">
+        <div class="card-img-container">
           {% if opportunity.image %}
             <img src="{{ opportunity.image.url }}" class="card-img-top" alt="{{ opportunity.title }}" />
           {% else %}
             <img src="{% static 'images/default_opportunity.jpg' %}" class="card-img-top" alt="Default Image" />
           {% endif %}
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title fw-bold text-primary">{{ opportunity.title }}</h5>
-            <p class="card-text flex-grow-1">{{ opportunity.description|truncatewords:20 }}</p>
-            <div class="mt-auto">
-              <p class="card-text"><small class="text-muted"><i class="fas fa-map-marker-alt"></i> {{ opportunity.location }}</small></p>
-              <p class="card-text"><small class="text-muted"><i class="fas fa-calendar-alt"></i> {{ opportunity.date|date:"F d, Y" }}</small></p>
-              <a href="{% url 'opportunity_detail' opportunity.id %}" class="btn btn-primary btn-block">View Details</a>
-            </div>
+        </div>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title fw-bold text-primary">{{ opportunity.title }}</h5>
+          <p class="card-text flex-grow-1">{{ opportunity.description|truncatewords:20 }}</p>
+          <div class="mt-auto">
+            <p class="card-text"><small class="text-muted"><i class="fas fa-map-marker-alt"></i> {{ opportunity.location }}</small></p>
+            <p class="card-text"><small class="text-muted"><i class="fas fa-calendar-alt"></i> {{ opportunity.date|date:"F d, Y" }}</small></p>
+            <a href="{% url 'opportunity_detail' opportunity.id %}" class="btn btn-primary btn-block">View Details</a>
           </div>
         </div>
       </div>
-      {% empty %}
+    {% empty %}
       <div class="col-12 text-center">
         <p>No volunteer opportunities available at the moment. Check back soon!</p>
       </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
 
 <div class="text-center mt-4">
   <a href="{% url 'add_opportunity' %}" class="btn btn-success btn-lg">Create New Opportunity</a>
+  <a href="{% url 'home' %}" class="btn btn-primary btn-lg ml-3">Back Home</a>
 </div>
 
 <style>
   .card {
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 30%;
+    margin: 1%;
+    border-radius: 10px;
+    overflow: hidden;
   }
   .card:hover {
     transform: translateY(-5px);
   }
+  .card-img-container {
+    height: 150px;
+    overflow: hidden;
+  }
+  .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
   .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
+    border-radius: 5px;
+    text-align: center;
   }
   .btn-success {
     background-color: #28a745;
     border-color: #28a745;
+    border-radius: 5px;
+  }
+  .btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  #volunteer-opportunities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ml-3 {
+    margin-left: 1rem;
   }
 </style>
-{% endblock content %}
+
+{% endblock %}
