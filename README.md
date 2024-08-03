@@ -66,7 +66,7 @@ Contributions to improve the ERS Web Application are welcome. Please follow thes
 
 ## License
 
-[Specify your license here]
+[Specify your lice]
 
 ## Contact
 
